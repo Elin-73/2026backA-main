@@ -15,7 +15,7 @@ const crearUser = asyncHandler(async(req, res) => {
 
     if (password.length < 6 || password.includes(" ") || !/[0-9]/.test(password) || !/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
         res.status(400)
-        throw new Error("La contraseña debe tener al menos 6 caracteres, no debe contener espaciosy tiene que tener al menos un número, una letra mayúscula y una letra minúscula")
+        throw new Error("La contraseña debe tener al menos 6 caracteres, no debe contener espacios y tiene que tener al menos un número, una letra mayúscula y una letra minúscula")
     }
 
     const userExiste = await User.findOne({email})

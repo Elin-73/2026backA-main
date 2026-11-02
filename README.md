@@ -1,74 +1,31 @@
-# Tasks API
+# Este projecto esta basado en lo visto en la clase de Ingeniería de Software I a lo largo de varias semanas
 
-A small Node.js, Express, and MongoDB API with user registration, login, and
-private task endpoints. The existing API is for **tasks** (`tareas`), not posts.
+Para correr este projecto se necesitan:
+- Node.js y npm
+- Cuenta de MongoDB Atlas
 
-## Requirements
+## Conectar MongoDB
 
-- Node.js and npm
-- A MongoDB Atlas account (or a local MongoDB server)
+mongodb+srv://User:Password@DBname.h6vbnbg.mongodb.net/
+Este es una ejemplo del link que aparecerá en mongo y el cual será copiado en su .env
+1. En MongoDB se deberá hacer un deploy de una base de datos junto con un usuario y permitir
+   Nuestro IP en **Network Access**.
+2. Se seleccionará **Connect > Drivers** para el link.
+3. Se creará un .env con lo siguiente:
 
-## Run locally with MongoDB Atlas
-IngSoftwareProject
-7IGiTdJRlGZlHmCd
-mongodb+srv://IngSoftwareProject:7IGiTdJRlGZlHmCd@cluster0.h6vbnbg.mongodb.net/
-1. In MongoDB Atlas, create a free database deployment, a database user, and
-   allow your computer's IP address in **Network Access**.
-2. Select **Connect > Drivers** and copy the connection string.
-3. Open PowerShell in the project folder and create your private environment
-   file:
+   PORT=5000 (Usualmente el 5000 a menos de que lo hayas cambiado)
+   MONGO_DB=Tu link
+   JWT_SECRET=Tu código que creaste
 
-   ```powershell
-   Copy-Item .env.example .env
-   notepad .env
+4. En PowerShell, instalar dependencias y las API's con este comando:
+
    ```
-
-   Replace the `MONGO_DB` value with your Atlas connection string and replace
-   `JWT_SECRET` with a long, private random value. Put the database name
-   (for example, `tasksdb`) in the connection string. If your database password
-   contains special URL characters, URL-encode them in the connection string.
-4. In that PowerShell window, install dependencies and start the API:
-
-   ```powershell
+   powershell
    npm.cmd install
    npm.cmd run server
    ```
-   The API starts at `http://localhost:5000`. Keep the
-   terminal open while using the API. `.env` contains secrets and is excluded
-   from Git; do not share or commit it.
+   La API empieza en `http://localhost:5000`
+   Manten el powershell abierto durante la sesión
 
-## API endpoints
+## Pruebas en Postman
 
-Send and receive JSON. Register or log in first; use the returned token as
-`Authorization: Bearer <token>` on private endpoints.
-
-| Method | Path | Access | Purpose |
-|---|---|---|---|
-| POST | `/api/users/register` | Public | Create an account with `nombre`, `email`, and `password` |
-| POST | `/api/users/login` | Public | Log in with `email` and `password`; returns a token |
-| GET | `/api/users/datos` | Token required | Get the current user's details |
-| GET | `/api/tareas` | Token required | List the signed-in user's tasks |
-| POST | `/api/tareas` | Token required | Create a task with `descripcion` |
-| PUT | `/api/tareas/:id` | Token required | Update a task's `descripcion` |
-| DELETE | `/api/tareas/:id` | Token required | Delete one of the user's tasks |
-
-Example registration body:
-
-```json
-{
-  "nombre": "Alex",
-  "email": "alex@example.com",
-  "password": "choose-a-password"
-}
-```
-
-Example task body:
-
-```json
-{
-  "descripcion": "My first task"
-}
-```
-
-The frontend is not included in this project. A web or mobile frontend can call
-these endpoints over HTTP; private requests must include the login token.
