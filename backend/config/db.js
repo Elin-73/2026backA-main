@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const connectDB = async () => {
     if (!process.env.MONGO_DB) {
-        throw new Error('MONGO_DB is required. Add your MongoDB connection string to .env.')
+        throw new Error('Se requiere la variable de entorno MONGO_DB. Agrega tu cadena de conexión de MongoDB a .env.')
     }
 
     try {
